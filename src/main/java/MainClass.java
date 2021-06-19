@@ -15,13 +15,13 @@ public class MainClass {
 
         LoginPage loginPage = new LoginPage(driver);
 
-        loginPage.logginIn("danieleontev@mail.ru","dCnxW3ZpVAKFmaq");
+        loginPage.logginIn("Логин","Пароль");
 
         NewLetter newLetter = new NewLetter(driver);
 
         Thread.sleep(10000);
 
-        newLetter.writingALetter("danieleontev@yandex.ru", "Test message", "Это тестовое сообщение, для проверки работы автотеста.");
+        newLetter.writingALetter("Почта получателя", "Тема письма", "Само сообщение");
 
         Thread.sleep(5000);
 

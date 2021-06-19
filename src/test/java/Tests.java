@@ -23,6 +23,7 @@ public class Tests {
 
     }
 
+    // неликвидные логин и пароль
     @Test
     public void loginInFailTest() throws InterruptedException {
         LoginPage failLogin = loginPage.logginIn("TestTestov", "qwerty");
@@ -31,36 +32,40 @@ public class Tests {
         Assert.assertEquals("Неверное имя или пароль", error);
     }
 
+    // ликвидные логин и пароль, подтверждение по нахождению вашего логина на странице в виде текста
     @Test
     public void loginInSuccessTest() throws InterruptedException {
-        LoginPage successLogin = loginPage.logginIn("danieleontev@mail.ru", "dCnxW3ZpVAKFmaq");
+        LoginPage successLogin = loginPage.logginIn("Логин", "Пароль");
         Thread.sleep(3000);
         String heading = loginPage.getCorrectHeading();
-        Assert.assertEquals("danieleontev@mail.ru", heading);
+        Assert.assertEquals("Ваш логин", heading);
     }
 
+    // при отправке сообщения не заполнено поле "получатель"
     @Test
     public void errorToAddressTest() throws InterruptedException {
-        LoginPage successLogin = loginPage.logginIn("danieleontev@mail.ru", "dCnxW3ZpVAKFmaq");
+        LoginPage successLogin = loginPage.logginIn("Логин", "Пароль");
         NewLetter failNewletter = newLetter.writingALetter("", "qwer", "qwer");
         Thread.sleep(3000);
         String error = newLetter.getErrorText();
         Assert.assertEquals("Не указан адрес получателя", error);
     }
 
+    // при отправке сообщения, указан неликвидный Emal адрес
     @Test
     public void invalidToAddressTest() throws InterruptedException {
-        LoginPage successLogin = loginPage.logginIn("danieleontev@mail.ru", "dCnxW3ZpVAKFmaq");
+        LoginPage successLogin = loginPage.logginIn("Логин", "Пароль");
         NewLetter failNewletter = newLetter.writingALetter("123", "", "");
         Thread.sleep(3000);
         String error = newLetter.getErrorHeadingText();
         Assert.assertEquals("Присутствуют некорректные адреса", error);
     }
 
+    // успешная отправка сообщения, с поиском подтверждения по заголовку
     @Test
     public void emailSuccesfullySended() {
-        LoginPage successLogin = loginPage.logginIn("danieleontev@mail.ru", "dCnxW3ZpVAKFmaq");
-        NewLetter failNewletter = newLetter.writingALetter("danieleontev@yandex.ru", "TestMessage",
+        LoginPage successLogin = loginPage.logginIn("Логин", "Пароль");
+        NewLetter failNewletter = newLetter.writingALetter("Ваш получатель", "TestMessage",
                 "Тестовое сообщение, для проверки jUnit тестов.");
         String heading = newLetter.getSuccessMessage();
         Assert.assertEquals("Письмо отправлено", heading);
